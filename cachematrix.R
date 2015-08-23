@@ -24,15 +24,15 @@ makeCacheMatrix <- function(x=matrix(numeric())) {
 ## This function calls function solve() in R to compute the inverse of a matrix,
 ## Besides, it saves inverse when it's computed for the first time
 
-
-cacheSolve <- function(x, ...) {
+cacheSolve <- function(x,...) {
         inv <- x$getinv()
-        if(!sum(is.na(head(inv,1)) = 0)) {
-                ## check if inverse is computed but checking the first row to be NA
-                message("getting cached data")
+        if(sum(is.na(head(inv,1)))== 0) {
+         ## check if inverse is computed by checking inverse's first row 
                 return(inv)
         }
-        inv <- solve(x$get(),...)
+        data <- x$get()
+        inv <- solve(data,...)
         x$setinv(inv)
-        return(inv)
+        inv
 }
+
