@@ -5,6 +5,10 @@
 ## make caching possible, it also uses a sub function setinv to cache the inverse.
 
 makeCacheMatrix <- function(x=matrix(numeric())) {
+        if(!dim(x)[1] == dim(x)[2]) {
+                message("Square matrix only!")
+                return
+        }
         inv <- matrix()
         set <- function(y) {
                 x <<- y
@@ -26,7 +30,8 @@ makeCacheMatrix <- function(x=matrix(numeric())) {
 cacheSolve <- function(x,...) {
         inv <- x$getinv()
         if(sum(is.na(head(inv,1)))== 0) {
-         ## check if inverse is computed by checking inverse's first row 
+         ## check if inverse is computed by checking inverse's first row
+                message("getting cached data")
                 return(inv)
         }
         data <- x$get()
@@ -37,7 +42,8 @@ cacheSolve <- function(x,...) {
 }
 
 ## Test example:
+## set.seed(10)
 ## x <- matrix(rnorm(16,10,2),4,4)
 ## input <- makeCacheMatrix(x)
-## inv <- cachesolve(input)
-## print(inv)
+## inv <- cacheSolve(input)
+## cachedSolve(input)
