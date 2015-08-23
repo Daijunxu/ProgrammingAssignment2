@@ -10,7 +10,6 @@ makeCacheMatrix <- function(x=matrix(numeric())) {
                 x <<- y
                 inv <<- matrix()
         }
-        
         get <- function() x
         setinv <- function(matrixInverse) inv <<- matrixInverse
         getinv <- function() inv
@@ -22,7 +21,7 @@ makeCacheMatrix <- function(x=matrix(numeric())) {
 
 
 ## This function calls function solve() in R to compute the inverse of a matrix,
-## Besides, it saves inverse when it's computed for the first time
+## Besides, it saves inverse to cache when it's computed for the first time
 
 cacheSolve <- function(x,...) {
         inv <- x$getinv()
@@ -33,6 +32,12 @@ cacheSolve <- function(x,...) {
         data <- x$get()
         inv <- solve(data,...)
         x$setinv(inv)
+        ## cache the inverse
         inv
 }
 
+## Test example:
+## x <- matrix(rnorm(16,10,2),4,4)
+## input <- makeCacheMatrix(x)
+## inv <- cachesolve(input)
+## print(inv)
