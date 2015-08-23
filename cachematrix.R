@@ -25,14 +25,14 @@ makeCacheMatrix <- function(x=matrix(numeric())) {
 ## Besides, it saves inverse when it's computed for the first time
 
 
-cacheSolve <- function(x,...) {
+cacheSolve <- function(x, ...) {
         inv <- x$getinv()
-        if(!is.na(inv)) {
+        if(!sum(is.na(head(inv,1)) = 0)) {
+                ## check if inverse is computed but checking the first row to be NA
                 message("getting cached data")
                 return(inv)
         }
-        data <- x$get()
-        inv <- solve(data,...)
+        inv <- solve(x$get(),...)
         x$setinv(inv)
-        inv
+        return(inv)
 }
